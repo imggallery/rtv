@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>IMGgallery · Galería de imágenes</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <a class="brand" href="./" aria-label="IMGgallery, inicio"><span class="brand-icon" aria-hidden="true">▧</span> IMG<span>gallery</span></a>
+    <span class="header-note">Una colección en imágenes</span>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow">EL ARCHIVO VISUAL</p>
+      <h1 id="title">Tus galerías,<br>imagen a imagen.</h1>
+      <p class="description">Elige una galería y explora su colección.</p>
+    </section>
+    <section aria-label="Colección de imágenes">
+      <div class="collection-bar">
+        <label for="collection">Seleccionar galería</label>
+        <select id="collection" disabled><option>Cargando galerías…</option></select>
+      </div>
+      <h2 id="collection-title"></h2>
+      <p id="collection-description" class="description" hidden></p>
+      <div class="toolbar">
+        <p id="count" role="status">Cargando colección…</p>
+        <div class="controls">
+          <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Buscar imágenes…" aria-label="Buscar imágenes por nombre"></label>
+          <label class="sr-only" for="sort">Orden de imágenes</label>
+          <select id="sort"><option value="name">Nombre: A–Z</option><option value="reverse">Nombre: Z–A</option></select>
+        </div>
+      </div>
+      <div id="gallery" class="gallery"></div>
+      <div id="message" class="message" hidden></div>
+      <nav id="pagination" class="pagination" aria-label="Páginas de imágenes" hidden>
+        <button id="page-previous" type="button">← Anterior</button>
+        <span id="page-status" role="status"></span>
+        <button id="page-next" type="button">Siguiente →</button>
+      </nav>
+    </section>
+  </main>
+  <footer><span>IMGgallery</span><span>Una colección para descubrir, imagen a imagen.</span></footer>
+  <dialog id="viewer" aria-label="Vista ampliada de imagen">
+    <div class="viewer-bar"><p id="viewer-title"></p><button id="close" type="button" aria-label="Cerrar vista ampliada">✕</button></div>
+    <div class="viewer-stage"><button id="previous" type="button" aria-label="Imagen anterior">←</button><img id="full-image" alt=""><button id="next" type="button" aria-label="Imagen siguiente">→</button></div>
+    <div class="viewer-bottom"><span id="position"></span><a id="original" target="_blank" rel="noopener">Abrir original ↗</a></div>
+  </dialog>
+</body>
+</html>
