@@ -1,0 +1,50 @@
+name: Publicar IMGgallery
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/configure-pages@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '11.25.0'
+          package_json_file: ${{ hashFiles('package.json') != '' && 'package.json' || 'IMGgallery/package.json' }}
+      - name: Preparar galería
+        id: build
+        shell: bash
+        run: |
+          if [ -f scripts/build.mjs ]; then
+            pnpm install --frozen-lockfile
+            pnpm build
+          else
+            cd IMGgallery
+            pnpm install --frozen-lockfile
+            pnpm build
+          fi
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: ${{ steps.build.outputs.path }}
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v4
